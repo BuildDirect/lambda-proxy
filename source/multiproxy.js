@@ -1,6 +1,10 @@
 var https = require('https');
+const DEBUG = process.env.DEBUG | false;
+
 
 exports.handler = (event, context, callback) => {
+    if (DEBUG)
+        console.log(JSON.stringify(event));
     if (! ("headers" in event))
         return callback("Missing headers in event body, you need to set body mapping in gateway.");
     if (! ("body" in event))
@@ -26,7 +30,8 @@ exports.handler = (event, context, callback) => {
         });
         
         res.on('end', (e) => {
-            console.log("Call to " + config.hostname + " got status " + res.statusCode + ": " + JSON.stringify(event.body));
+            if (DEBUG)
+                console.log("Call to " + config.hostname + " got status " + res.statusCode + ": " + JSON.stringify(event.body));
             if(res.statusCode < 400){
                 callback(null, data);
             }
@@ -38,11 +43,10 @@ exports.handler = (event, context, callback) => {
     });
     
     req.on('error', (err) => {
-        console.log("Error in calling " + config.hostname + ": " + err);
+        console.error("Error in calling " + config.hostname + ": " + err);
         callback(err);
     });
     
     req.write(JSON.stringify(event.body));
     req.end();
-
 };
