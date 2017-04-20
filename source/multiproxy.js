@@ -1,10 +1,10 @@
 var https = require('https');
-const DEBUG = process.env.DEBUG | false;
+const DEBUG = process.env.DEBUG;
 
 
 exports.handler = (event, context, callback) => {
     if (DEBUG)
-        console.log(JSON.stringify(event));
+        console.log("Request object: " + JSON.stringify(event));
     if (! ("headers" in event))
         return callback("Missing headers in event body, you need to set body mapping in gateway.");
     if (! ("body" in event))
@@ -31,7 +31,7 @@ exports.handler = (event, context, callback) => {
         
         res.on('end', (e) => {
             if (DEBUG)
-                console.log("Call to " + config.hostname + " got status " + res.statusCode + ": " + JSON.stringify(event.body));
+                console.log("Call to " + config.hostname + " got status " + res.statusCode + ": " + data);
             if(res.statusCode < 400){
                 callback(null, data);
             }
