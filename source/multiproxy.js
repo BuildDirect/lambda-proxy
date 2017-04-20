@@ -26,8 +26,8 @@ exports.handler = (event, context, callback) => {
         });
         
         res.on('end', (e) => {
+            console.log("Call to " + config.hostname + " got status " + res.statusCode + ": " + JSON.stringify(event.body));
             if(res.statusCode < 400){
-                console.log("Success when calling " + config.hostname + ": " + JSON.stringify(event.body));
                 callback(null, data);
             }
             else {
