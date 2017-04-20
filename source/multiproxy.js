@@ -27,7 +27,7 @@ exports.handler = (event, context, callback) => {
         
         res.on('end', (e) => {
             if(res.statusCode < 400){
-                console.log("Success for event: " + JSON.stringify(event.body));
+                console.log("Success when calling " + config.hostname + ": " + JSON.stringify(event.body));
                 callback(null, data);
             }
             else {
