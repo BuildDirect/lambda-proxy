@@ -1,4 +1,4 @@
-Lambda proxy to internal services
+# Proxy to services on VPC
 
 You have to deploy the lambda, and set an API gateway resource that points to it. Also, you'll need to give access rights to your private service to the lambda. 
 
