@@ -38,7 +38,7 @@ exports.handler = (event, context, callback) => {
     });
     
     req.on('error', (err) => {
-        console.log("Error in the lambda proxy: " + err);
+        console.log("Error in calling " + config.hostname + ": " + err);
         callback(err);
     });
     
